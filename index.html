@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Play Ball Sort Master - A challenging and addictive puzzle game where you sort colored balls into tubes. Test your brain with hundreds of levels of increasing difficulty!">
+    <meta name="keywords" content="Ball Sort Master, color sorting game, puzzle game, brain game, ball sorting puzzle, bigbigluck, free online games">
+    <title>Ball Sort Master - Challenge Your Brain with Color Sorting Puzzles | BigBigLuck</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+        }
+        
+        .game-container {
+            height: calc(100vh - 70px - 2rem);
+            max-height: 80vh;
+        }
+        
+        .nav-shadow {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .comment-box {
+            transition: all 0.3s ease;
+        }
+        
+        .comment-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+        
+        .reply-form {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .reply-form.active {
+            max-height: 200px;
+        }
+        
+        /* Optimize iframe loading */
+        .iframe-container {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            background: #f0f0f0 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>') no-repeat center center;
+        }
+        
+        .responsive-iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* 移动端适配优化 */
+        @media (max-width: 640px) {
+            .game-container {
+                height: calc(100vh - 70px - 1rem);
+                max-height: 60vh;
+            }
+            
+            nav {
+                padding: 0.5rem 1rem;
+            }
+            
+            .nav-logo-text {
+                font-size: 1rem;
+            }
+            
+            .comment-box {
+                padding: 0.75rem;
+            }
+            
+            .comment-form-container {
+                padding: 1rem;
+            }
+            
+            .btn-primary {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .footer-links {
+                margin-top: 1rem;
+            }
+        }
+        
+        /* 平板适配 */
+        @media (min-width: 641px) and (max-width: 1024px) {
+            .game-container {
+                max-height: 70vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header class="bg-white nav-shadow fixed w-full z-10">
+        <nav class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center">
+                <div class="mr-3">
+                    <svg class="w-10 h-10" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="25" cy="25" r="20" fill="#4F46E5"/>
+                        <circle cx="25" cy="15" r="6" fill="#F43F5E"/>
+                        <circle cx="15" cy="30" r="6" fill="#10B981"/>
+                        <circle cx="35" cy="30" r="6" fill="#F59E0B"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-gray-800">Ball Sort Master</h1>
+                    <p class="text-sm text-gray-600 hidden sm:block">Challenge your brain with color sorting puzzles!</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="#game" class="text-indigo-600 hover:text-indigo-800 font-medium">Play Now</a>
+                <a href="#comments" class="text-indigo-600 hover:text-indigo-800 font-medium">Comments</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 pt-24 pb-12">
+        <!-- Game Section -->
+        <section id="game" class="mb-12">
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <div class="p-4 bg-gradient-to-r from-indigo-500 to-purple-600">
+                    <h2 class="text-xl font-bold text-white">Ball Sort Master - Test Your Puzzle Skills!</h2>
+                </div>
+                <div class="game-container iframe-container">
+                    <iframe id="game-frame" class="responsive-iframe" src="https://monty0202.github.io/BallSortMaster/" title="Ball Sort Master Game" allowfullscreen loading="lazy"></iframe>
+                </div>
+                <div class="p-4 bg-gray-50 border-t border-gray-100">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-700"><i class="fas fa-gamepad mr-2 text-indigo-500"></i> Sort the colored balls into matching tubes</p>
+                        </div>
+                        <div>
+                            <button id="fullscreen-btn" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
+                                <i class="fas fa-expand mr-1"></i> Fullscreen
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- Comments Section -->
+        <section id="comments" class="mb-12">
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <div class="p-4 bg-gradient-to-r from-indigo-500 to-purple-600">
+                    <h2 class="text-xl font-bold text-white">Player Comments</h2>
+                </div>
+                <div class="p-6">
+                    <!-- Comment Form -->
+                    <div class="mb-8">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Leave a Comment</h3>
+                        <form id="comment-form" class="space-y-4">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                                <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors" required>
+                            </div>
+                            <div>
+                                <label for="comment" class="block text-sm font-medium text-gray-700 mb-1">Your Comment</label>
+                                <textarea id="comment" name="comment" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors" required></textarea>
+                            </div>
+                            <div>
+                                <button type="submit" class="btn-primary px-6 py-3 text-white font-medium rounded-lg">
+                                    <i class="fas fa-paper-plane mr-2"></i> Post Comment
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Comments List -->
+                    <div id="comments-list">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Recent Comments</h3>
+                        
+                        <!-- Comment 1 -->
+                        <div class="comment-box bg-gray-50 p-4 rounded-lg mb-4 border border-gray-200">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mr-3">
+                                    <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-500 font-semibold">JD</div>
+                                </div>
+                                <div class="flex-grow">
+                                    <div class="flex items-center justify-between mb-1">
+                                        <h4 class="font-semibold text-gray-800">John Doe</h4>
+                                        <span class="text-sm text-gray-500">2 days ago</span>
+                                    </div>
+                                    <p class="text-gray-700 mb-2">This game is so addictive! I've been playing for hours and can't stop. The difficulty progression is perfect - challenging but not frustrating.</p>
+                                    <button class="reply-toggle text-sm text-indigo-600 hover:text-indigo-800 font-medium"><i class="fas fa-reply mr-1"></i> Reply</button>
+                                    
+                                    <div class="reply-form mt-3 pl-4 border-l-2 border-indigo-200">
+                                        <form class="space-y-3">
+                                            <div>
+                                                <input type="text" placeholder="Your Name" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors" required>
+                                            </div>
+                                            <div>
+                                                <textarea placeholder="Your Reply" rows="2" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors" required></textarea>
+                                            </div>
+                                            <div>
+                                                <button type="submit" class="px-4 py-2 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 transition-colors">Submit Reply</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    
+                                    <!-- Replies -->
+                                    <div class="mt-4 pl-4 border-l-2 border-gray-200">
+                                        <div class="mb-3">
+                                            <div class="flex items-start">
+                                                <div class="flex-shrink-0 mr-2">
+                                                    <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-500 font-semibold text-sm">AS</div>
+                                                </div>
+                                                <div>
+                                                    <div class="flex items-center mb-1">
+                                                        <h5 class="font-semibold text-gray-800 text-sm">Admin Smith</h5>
+                                                        <span class="text-xs text-gray-500 ml-2">1 day ago</span>
+                                                    </div>
+                                                    <p class="text-sm text-gray-700">Thanks for your feedback, John! We're glad you're enjoying the game. Have you tried the expert levels yet?</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Comment 2 -->
+                        <div class="comment-box bg-gray-50 p-4 rounded-lg mb-4 border border-gray-200">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mr-3">
+                                    <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-500 font-semibold">EJ</div>
+                                </div>
+                                <div class="flex-grow">
+                                    <div class="flex items-center justify-between mb-1">
+                                        <h4 class="font-semibold text-gray-800">Emma Johnson</h4>
+                                        <span class="text-sm text-gray-500">5 days ago</span>
+                                    </div>
+                                    <p class="text-gray-700 mb-2">I love how this game makes me think strategically. It's a perfect brain teaser for my daily commute. Would love to see more color themes in future updates!</p>
+                                    <button class="reply-toggle text-sm text-indigo-600 hover:text-indigo-800 font-medium"><i class="fas fa-reply mr-1"></i> Reply</button>
+                                    
+                                    <div class="reply-form mt-3 pl-4 border-l-2 border-indigo-200">
+                                        <form class="space-y-3">
+                                            <div>
+                                                <input type="text" placeholder="Your Name" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors" required>
+                                            </div>
+                                            <div>
+                                                <textarea placeholder="Your Reply" rows="2" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors" required></textarea>
+                                            </div>
+                                            <div>
+                                                <button type="submit" class="px-4 py-2 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 transition-colors">Submit Reply</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Comment 3 -->
+                        <div class="comment-box bg-gray-50 p-4 rounded-lg border border-gray-200">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mr-3">
+                                    <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600 font-semibold">MT</div>
+                                </div>
+                                <div class="flex-grow">
+                                    <div class="flex items-center justify-between mb-1">
+                                        <h4 class="font-semibold text-gray-800">Mike Thompson</h4>
+                                        <span class="text-sm text-gray-500">1 week ago</span>
+                                    </div>
+                                    <p class="text-gray-700 mb-2">Great game for relaxing after work! The animations are smooth and the controls are intuitive. I've recommended it to all my friends who enjoy puzzle games.</p>
+                                    <button class="reply-toggle text-sm text-indigo-600 hover:text-indigo-800 font-medium"><i class="fas fa-reply mr-1"></i> Reply</button>
+                                    
+                                    <div class="reply-form mt-3 pl-4 border-l-2 border-indigo-200">
+                                        <form class="space-y-3">
+                                            <div>
+                                                <input type="text" placeholder="Your Name" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors" required>
+                                            </div>
+                                            <div>
+                                                <textarea placeholder="Your Reply" rows="2" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors" required></textarea>
+                                            </div>
+                                            <div>
+                                                <button type="submit" class="px-4 py-2 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 transition-colors">Submit Reply</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div>
+                <h3 class="text-lg font-semibold mb-4">About Ball Sort Master on bigbigluck.work</h3>
+                <p class="text-gray-400 mb-4">Ball Sort Master on bigbigluck.work is an addictive puzzle game that challenges your brain with color sorting puzzles. The goal is simple: sort the colored balls into tubes until each tube contains balls of the same color.</p>
+                <p class="text-gray-400 mb-4">With hundreds of levels of increasing difficulty, Ball Sort Master at bigbigluck.work will keep you entertained for hours. The game is easy to learn but challenging to master, making it perfect for players of all ages looking for the best puzzle experience on bigbigluck.work.</p>
+                <div class="mt-4">
+                    <h4 class="text-md font-semibold mb-2 text-gray-300">How to Play:</h4>
+                    <ul class="list-disc pl-5 text-gray-400 space-y-1">
+                        <li>Tap on a tube to select it</li>
+                        <li>Tap on another tube to move the top ball</li>
+                        <li>You can only move a ball to an empty tube or on top of a ball with the same color</li>
+                        <li>Complete the level by sorting all balls by color into tubes</li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 从localStorage加载评论数据
+            loadCommentsFromStorage();
+            
+            // Toggle reply forms
+            const replyToggles = document.querySelectorAll('.reply-toggle');
+            replyToggles.forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const replyForm = this.nextElementSibling;
+                    replyForm.classList.toggle('active');
+                });
+            });
+            
+            // 保存评论数据到localStorage
+            function saveCommentsToStorage() {
+                const commentsList = document.getElementById('comments-list');
+                const commentsData = [];
+                
+                // 获取所有评论
+                const commentBoxes = commentsList.querySelectorAll('.comment-box');
+                commentBoxes.forEach(commentBox => {
+                    const nameElement = commentBox.querySelector('.font-semibold.text-gray-800');
+                    const timeElement = commentBox.querySelector('.text-sm.text-gray-500');
+                    const commentElement = commentBox.querySelector('.text-gray-700.mb-2');
+                    const avatarElement = commentBox.querySelector('.w-10.h-10');
+                    
+                    if (!nameElement || !commentElement) return;
+                    
+                    const commentData = {
+                        name: nameElement.textContent,
+                        time: timeElement ? timeElement.textContent : 'Just now',
+                        comment: commentElement.textContent,
+                        avatar: {
+                            initials: avatarElement ? avatarElement.textContent : '',
+                            color: avatarElement ? avatarElement.className.match(/bg-(\w+)-100/)[1] : 'indigo'
+                        },
+                        replies: []
+                    };
+                    
+                    // 获取评论的回复
+                    const repliesContainer = commentBox.querySelector('.mt-4.pl-4.border-l-2.border-gray-200');
+                    if (repliesContainer) {
+                        const replyElements = repliesContainer.querySelectorAll('.mb-3');
+                        replyElements.forEach(replyElement => {
+                            const replyNameElement = replyElement.querySelector('.font-semibold.text-gray-800.text-sm');
+                            const replyTimeElement = replyElement.querySelector('.text-xs.text-gray-500');
+                            const replyTextElement = replyElement.querySelector('.text-sm.text-gray-700');
+                            const replyAvatarElement = replyElement.querySelector('.w-8.h-8');
+                            
+                            if (!replyNameElement || !replyTextElement) return;
+                            
+                            const replyData = {
+                                name: replyNameElement.textContent,
+                                time: replyTimeElement ? replyTimeElement.textContent : 'Just now',
+                                reply: replyTextElement.textContent,
+                                avatar: {
+                                    initials: replyAvatarElement ? replyAvatarElement.textContent : '',
+                                    color: replyAvatarElement ? replyAvatarElement.className.match(/bg-(\w+)-100/)[1] : 'indigo'
+                                }
+                            };
+                            
+                            commentData.replies.push(replyData);
+                        });
+                    }
+                    
+                    commentsData.push(commentData);
+                });
+                
+                // 保存到localStorage
+                localStorage.setItem('commentsData', JSON.stringify(commentsData));
+            }
+            
+            // 从localStorage加载评论数据
+            function loadCommentsFromStorage() {
+                const commentsData = localStorage.getItem('commentsData');
+                if (!commentsData) return;
+                
+                try {
+                    const comments = JSON.parse(commentsData);
+                    const commentsList = document.getElementById('comments-list');
+                    
+                    // 清除默认评论（保留标题）
+                    const commentsHeading = commentsList.querySelector('h3');
+                    while (commentsHeading.nextElementSibling) {
+                        commentsHeading.nextElementSibling.remove();
+                    }
+                    
+                    // 添加保存的评论
+                    comments.forEach(comment => {
+                        const newComment = createCommentElement(comment);
+                        commentsList.appendChild(newComment);
+                    });
+                    
+                    // 为新添加的评论设置事件监听器
+                    setupToggleListeners();
+                    setupReplyFormListeners();
+                } catch (error) {
+                    console.error('Error loading comments:', error);
+                }
+            }
+            
+            // 创建评论元素
+            function createCommentElement(comment) {
+                const newComment = document.createElement('div');
+                newComment.className = 'comment-box bg-gray-50 p-4 rounded-lg mb-4 border border-gray-200';
+                
+                let repliesHTML = '';
+                if (comment.replies && comment.replies.length > 0) {
+                    let repliesContent = '';
+                    comment.replies.forEach(reply => {
+                        repliesContent += `
+                            <div class="mb-3">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 mr-2">
+                                        <div class="w-8 h-8 rounded-full bg-${reply.avatar.color}-100 flex items-center justify-center text-${reply.avatar.color}-500 font-semibold text-sm">${reply.avatar.initials}</div>
+                                    </div>
+                                    <div>
+                                        <div class="flex items-center mb-1">
+                                            <h5 class="font-semibold text-gray-800 text-sm">${reply.name}</h5>
+                                            <span class="text-xs text-gray-500 ml-2">${reply.time}</span>
+                                        </div>
+                                        <p class="text-sm text-gray-700">${reply.reply}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                    repliesHTML = `
+                        <div class="mt-4 pl-4 border-l-2 border-gray-200">
+                            ${repliesContent}
+                        </div>
+                    `;
+                }
+                
+                newComment.innerHTML = `
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 mr-3">
+                            <div class="w-10 h-10 rounded-full bg-${comment.avatar.color}-100 flex items-center justify-center text-${comment.avatar.color}-500 font-semibold">${comment.avatar.initials}</div>
+                        </div>
+                        <div class="flex-grow">
+                            <div class="flex items-center justify-between mb-1">
+                                <h4 class="font-semibold text-gray-800">${comment.name}</h4>
+                                <span class="text-sm text-gray-500">${comment.time}</span>
+                            </div>
+                            <p class="text-gray-700 mb-2">${comment.comment}</p>
+                            <button class="reply-toggle text-sm text-indigo-600 hover:text-indigo-800 font-medium"><i class="fas fa-reply mr-1"></i> Reply</button>
+                            
+                            <div class="reply-form mt-3 pl-4 border-l-2 border-indigo-200">
+                                <form class="space-y-3">
+                                    <div>
+                                        <input type="text" placeholder="Your Name" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors" required>
+                                    </div>
+                                    <div>
+                                        <textarea placeholder="Your Reply" rows="2" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors" required></textarea>
+                                    </div>
+                                    <div>
+                                        <button type="submit" class="px-4 py-2 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 transition-colors">Submit Reply</button>
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            ${repliesHTML}
+                        </div>
+                    </div>
+                `;
+                
+                return newComment;
+            }
+            
+            // 设置回复按钮的事件监听器
+            function setupToggleListeners() {
+                const replyToggles = document.querySelectorAll('.reply-toggle');
+                replyToggles.forEach(toggle => {
+                    toggle.addEventListener('click', function() {
+                        const replyForm = this.nextElementSibling;
+                        replyForm.classList.toggle('active');
+                    });
+                });
+            }
+            
+            // Handle reply form submissions
+            function setupReplyFormListeners() {
+                const replyForms = document.querySelectorAll('.reply-form form');
+                replyForms.forEach(form => {
+                    // Only add listener if it doesn't already have one
+                    if (!form.hasAttribute('data-has-listener')) {
+                        form.setAttribute('data-has-listener', 'true');
+                        form.addEventListener('submit', function(e) {
+                            e.preventDefault();
+                            
+                            // Get form values
+                            const nameInput = this.querySelector('input[placeholder="Your Name"]');
+                            const replyTextarea = this.querySelector('textarea[placeholder="Your Reply"]');
+                            
+                            if (!nameInput || !replyTextarea) {
+                                alert('Error: Form elements not found');
+                                return;
+                            }
+                            
+                            const name = nameInput.value;
+                            const reply = replyTextarea.value;
+                            
+                            // Validate form
+                            if (!name.trim() || !reply.trim()) {
+                                alert('Please fill in all fields');
+                                return;
+                            }
+                            
+                            // Find the parent comment container
+                            const commentBox = this.closest('.comment-box');
+                            
+                            // Get initials for avatar
+                            const initials = name.split(' ')
+                                .map(word => word.charAt(0).toUpperCase())
+                                .slice(0, 2)
+                                .join('');
+                            
+                            // Generate random color for avatar
+                            const colors = ['indigo', 'green', 'yellow', 'purple', 'red', 'blue'];
+                            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                            
+                            // Create new reply element
+                            const newReply = document.createElement('div');
+                            newReply.className = 'mb-3';
+                            newReply.innerHTML = `
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 mr-2">
+                                        <div class="w-8 h-8 rounded-full bg-${randomColor}-100 flex items-center justify-center text-${randomColor}-500 font-semibold text-sm">${initials}</div>
+                                    </div>
+                                    <div>
+                                        <div class="flex items-center mb-1">
+                                            <h5 class="font-semibold text-gray-800 text-sm">${name}</h5>
+                                            <span class="text-xs text-gray-500 ml-2">Just now</span>
+                                        </div>
+                                        <p class="text-sm text-gray-700">${reply}</p>
+                                    </div>
+                                </div>
+                            `;
+                            
+                            // Find or create replies container
+                            let repliesContainer = commentBox.querySelector('.mt-4.pl-4.border-l-2.border-gray-200');
+                            if (!repliesContainer) {
+                                repliesContainer = document.createElement('div');
+                                repliesContainer.className = 'mt-4 pl-4 border-l-2 border-gray-200';
+                                commentBox.querySelector('.flex-grow').appendChild(repliesContainer);
+                            }
+                            
+                            // Add the new reply to the container
+                            repliesContainer.appendChild(newReply);
+                            
+                            // Reset form and hide it
+                            this.reset();
+                            this.closest('.reply-form').classList.remove('active');
+                            
+                            // 保存评论数据到localStorage
+                            saveCommentsToStorage();
+                            
+                            // Show success message
+                            alert(`Thank you for your reply, ${name}! Your reply has been posted.`);
+                        });
+                    }
+                });
+            }
+            
+            // Setup listeners for existing reply forms
+            setupReplyFormListeners();
+            
+            // Handle comment form submission
+            const commentForm = document.getElementById('comment-form');
+            commentForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const name = document.getElementById('name').value;
+                const comment = document.getElementById('comment').value;
+                
+                // Validate form
+                if (!name.trim() || !comment.trim()) {
+                    alert('Please fill in all fields');
+                    return;
+                }
+                
+                // Create new comment element
+                const commentsList = document.getElementById('comments-list');
+                const newComment = document.createElement('div');
+                newComment.className = 'comment-box bg-gray-50 p-4 rounded-lg mb-4 border border-gray-200';
+                
+                // Get initials for avatar
+                const initials = name.split(' ')
+                    .map(word => word.charAt(0).toUpperCase())
+                    .slice(0, 2)
+                    .join('');
+                
+                // Generate random color for avatar
+                const colors = ['indigo', 'green', 'yellow', 'purple', 'red', 'blue'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Current date
+                const now = new Date();
+                const timeAgo = 'Just now';
+                
+                // Set comment HTML
+                newComment.innerHTML = `
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 mr-3">
+                            <div class="w-10 h-10 rounded-full bg-${randomColor}-100 flex items-center justify-center text-${randomColor}-500 font-semibold">${initials}</div>
+                        </div>
+                        <div class="flex-grow">
+                            <div class="flex items-center justify-between mb-1">
+                                <h4 class="font-semibold text-gray-800">${name}</h4>
+                                <span class="text-sm text-gray-500">${timeAgo}</span>
+                            </div>
+                            <p class="text-gray-700 mb-2">${comment}</p>
+                            <button class="reply-toggle text-sm text-indigo-600 hover:text-indigo-800 font-medium"><i class="fas fa-reply mr-1"></i> Reply</button>
+                            
+                            <div class="reply-form mt-3 pl-4 border-l-2 border-indigo-200">
+                                <form class="space-y-3">
+                                    <div>
+                                        <input type="text" placeholder="Your Name" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors" required>
+                                    </div>
+                                    <div>
+                                        <textarea placeholder="Your Reply" rows="2" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors" required></textarea>
+                                    </div>
+                                    <div>
+                                        <button type="submit" class="px-4 py-2 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 transition-colors">Submit Reply</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Add the new comment at the top of the list
+                const commentsHeading = commentsList.querySelector('h3');
+                commentsList.insertBefore(newComment, commentsHeading.nextElementSibling);
+                
+                // Add event listener to the new reply toggle button
+                const newReplyToggle = newComment.querySelector('.reply-toggle');
+                newReplyToggle.addEventListener('click', function() {
+                    const replyForm = this.nextElementSibling;
+                    replyForm.classList.toggle('active');
+                });
+                
+                // Setup reply form listener for the new comment
+                setupReplyFormListeners();
+                
+                // Reset form
+                commentForm.reset();
+                
+                // 保存评论数据到localStorage
+                saveCommentsToStorage();
+                
+                // Show success message
+                alert(`Thank you for your comment, ${name}! Your comment has been posted.`);
+            });
+            
+            // Fullscreen button functionality
+            const fullscreenBtn = document.getElementById('fullscreen-btn');
+            const gameFrame = document.getElementById('game-frame');
+            
+            fullscreenBtn.addEventListener('click', function() {
+                if (gameFrame.requestFullscreen) {
+                    gameFrame.requestFullscreen();
+                } else if (gameFrame.webkitRequestFullscreen) { /* Safari */
+                    gameFrame.webkitRequestFullscreen();
+                } else if (gameFrame.msRequestFullscreen) { /* IE11 */
+                    gameFrame.msRequestFullscreen();
+                }
+            });
+            
+            // Lazy load iframe
+            const gameContainer = document.querySelector('.iframe-container');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const iframe = entry.target.querySelector('iframe');
+                        if (iframe.dataset.src) {
+                            iframe.src = iframe.dataset.src;
+                            iframe.removeAttribute('data-src');
+                        }
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            observer.observe(gameContainer);
+        });
+    </script>
+</body>
+</html>
